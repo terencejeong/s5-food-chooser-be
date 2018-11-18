@@ -3,28 +3,37 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import { ApolloServer, gql } from 'apollo-server-express';
 import schema from './graphQLSchema';
+import resolvers from './resolvers';
+import { VoteList } from './models/voteList';
 import { connect } from './db/index';
 import { router } from './router';
 const dotenv = require('dotenv');
-const PORT = 4000;
+
+dotenv.config();
 
 const app = express();
+
+// god damn cors
 app.use(cors());
+
 app.use(bodyParser.json());
+
+// create mongodb connection
 connect();
 
 //routes
 router(app);
 
-const resolvers = {
-  Query: {
-    hello: () => 'Hello world!'
-  },
-};
+const PORT = process.env.PORT  || 4000;
 
 const server = new ApolloServer({
   typeDefs: schema,
-  resolvers
+  resolvers,
+  context: async({ req }) => {
+    return {
+      VoteList
+    }
+  }
 });
 server.applyMiddleware({ app });
 

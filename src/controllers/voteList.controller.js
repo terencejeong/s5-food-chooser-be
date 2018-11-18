@@ -1,29 +1,29 @@
-import { User } from '../models/users';
+import { VoteList } from '../models/voteList';
 
-export const createUsers = async(req, res) => {
+export const createVoteList = async(req, res) => {
   try {
     const users = req.body.users;
     const columns = req.body.columns;
     const columnOrder = req.body.columnOrder;
 
-    const newUsers = new User({
+    const newVoteList = new VoteList({
       users: users,
       columns: columns,
       columnOrder: columnOrder
     });
 
-    await newUsers.save();
-    res.status(200).send(newUsers);
+    await newVoteList.save();
+    res.status(200).send(newVoteList);
 
   } catch(e) {
     res.status(400).send('errror', e);
   }
 }
 
-export const getUsers = async (req, res) => {
+export const getVoteList = async (req, res) => {
   try {
-    const userList = await User.find();
-    res.send(userList)
+    const voteList = await VoteList.find();
+    res.send(voteList)
   } catch(e) {
     res.status(400).send(e)
   }

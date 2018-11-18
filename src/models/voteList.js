@@ -1,7 +1,7 @@
 import mongoose  from 'mongoose';
-const { Schema } = mongoose
+const { Schema } = mongoose;
 
-const userSchema = new Schema ({
+const voteListSchema = new Schema ({
   users: [{
     userName: String,
     content: String,
@@ -14,4 +14,4 @@ const userSchema = new Schema ({
   columnOrder: [String]
 });
 
-export const User = mongoose.model('user', userSchema);
+export const VoteList = mongoose.model('user', voteListSchema);
